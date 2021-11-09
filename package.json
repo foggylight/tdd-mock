@@ -1,0 +1,22 @@
+{
+  "name": "tdd-mock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "npx jest --watchAll",
+    "test": "npx jest",
+    "build": "tsc",
+    "temp": "git add . && git commit -m 'temp'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.4.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "jest": "^27.3.0",
+    "ts-jest": "^27.0.7"
+  }
+}
