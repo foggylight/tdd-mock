@@ -1,5 +1,8 @@
 import TaskManager from '../src/taskManager';
 
-test('task manager exists', () => {
+test('get all tasks', () => {
     const manager = new TaskManager();
+    const tasks = manager.getAll();
+
+    expect(tasks).not.toBeNull();
 });
