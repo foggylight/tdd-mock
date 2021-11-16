@@ -1,4 +1,4 @@
-import { TaskRepository, Task } from './models';
+import { TaskRepository, Task, TaskState } from './models';
 
 class TaskManager {
     constructor(private repository: TaskRepository ) {
@@ -7,6 +7,10 @@ class TaskManager {
 
     getAll(): Array<Task> {
         return this.repository.tasks;
+    }
+
+    getActive() {
+        return this.repository.tasks.filter(task => task.state === TaskState.active);
     }
 };
 
