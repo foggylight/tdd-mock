@@ -1,4 +1,4 @@
-import { TaskRepository, TaskState } from '../src/models';
+import { Task, TaskRepository, TaskState } from '../src/models';
 import TaskManager from '../src/taskManager';
 
 const repository: TaskRepository = {
@@ -32,4 +32,16 @@ test('get active tasks', () => {
         name: 'task1',
         state: TaskState.active,
     }]);
+});
+
+test('add task', () => {
+    const newTask: Task = {
+        id: 3,
+        name: 'task3',
+        state: TaskState.active,
+    };
+
+    manager.addTask(newTask);
+
+    expect(manager.getAll()).toContainEqual(newTask);
 });
