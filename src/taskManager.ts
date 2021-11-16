@@ -1,11 +1,11 @@
-import TaskRepository from './models';
+import { TaskRepository, Task } from './models';
 
 class TaskManager {
     constructor(private repository: TaskRepository ) {
         this.repository = repository;
     }
 
-    getAll(): Array<string> {
+    getAll(): Array<Task> {
         return this.repository.tasks;
     }
 };

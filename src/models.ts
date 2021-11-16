@@ -1,5 +1,8 @@
-interface TaskRepository {
-    tasks: Array<string>;
+export interface Task {
+    id: number;
+    name: string;
 }
 
-export default TaskRepository;
+export interface TaskRepository {
+    tasks: Array<Task>;
+}
