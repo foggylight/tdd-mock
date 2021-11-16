@@ -5,7 +5,7 @@ class TaskManager {
         this.repository = repository;
     }
 
-    getAll(): Array<Task> {
+    getAll() {
         return this.repository.tasks;
     }
 
