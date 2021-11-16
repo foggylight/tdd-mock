@@ -52,3 +52,13 @@ test('delete task', () => {
 
     expect(manager.getAll().map(task => task.id)).not.toContain(deletedId);
 });
+
+test('update task', () => {
+    const updatedId = 1;
+    const newData = {
+        name: 'newName',
+    };
+    manager.updateTask(updatedId, newData);
+
+    expect(manager.getAll().find(task => task.id === updatedId)).toMatchObject(newData);
+});
