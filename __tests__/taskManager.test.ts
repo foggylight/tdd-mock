@@ -45,3 +45,10 @@ test('add task', () => {
 
     expect(manager.getAll()).toContainEqual(newTask);
 });
+
+test('delete task', () => {
+    const deletedId = 2;
+    manager.deleteTask(deletedId);
+
+    expect(manager.getAll().map(task => task.id)).not.toContain(deletedId);
+});
