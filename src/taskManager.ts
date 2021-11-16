@@ -23,6 +23,12 @@ class TaskManager {
         const taskIndex = this.tasks.findIndex(task => task.id === taskId);
         this.tasks.splice(taskIndex, 1);
     }
+
+    updateTask(taskId: number, newData: Task) {
+        const updatedTask = { ...this.tasks.find(task => task.id === taskId), ...newData };
+        const taskIndex = this.tasks.findIndex(task => task.id === taskId);
+        this.tasks.splice(taskIndex, 1, updatedTask);
+    }
 };
 
 export default TaskManager;

@@ -4,9 +4,9 @@ export enum TaskState {
 }
 
 export interface Task {
-    id: number;
-    name: string;
-    state: TaskState;
+    id?: number;
+    name?: string;
+    state?: TaskState;
 }
 
 export interface TaskRepository {
