@@ -16,6 +16,11 @@ class TaskManager {
     addTask(newTask: Task) {
         this.repository.tasks.push(newTask);
     }
+
+    deleteTask(taskId: number) {
+        const taskIndex = this.repository.tasks.findIndex(task => task.id === taskId);
+        this.repository.tasks.splice(taskIndex, 1);
+    }
 };
 
 export default TaskManager;
