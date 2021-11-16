@@ -1,6 +1,7 @@
+import TaskRepository from '../src/models';
 import TaskManager from '../src/taskManager';
 
-const repository = {
+const repository: TaskRepository = {
     tasks: [ 'task1', 'task2' ],
 };
 

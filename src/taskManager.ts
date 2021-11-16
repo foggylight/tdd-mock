@@ -1,6 +1,12 @@
+import TaskRepository from './models';
+
 class TaskManager {
-    getAll(): Array<null> {
-        return [];
+    constructor(private repository: TaskRepository ) {
+        this.repository = repository;
+    }
+
+    getAll(): Array<string> {
+        return this.repository.tasks;
     }
 };
 
