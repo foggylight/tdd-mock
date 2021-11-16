@@ -1,8 +1,12 @@
 import TaskManager from '../src/taskManager';
 
+const repository = {
+    tasks: [ 'task1', 'task2' ],
+};
+
 test('get all tasks', () => {
-    const manager = new TaskManager();
+    const manager = new TaskManager(repository);
     const tasks = manager.getAll();
 
-    expect(tasks).not.toBeNull();
+    expect(tasks).toEqual(repository.tasks);
 });
