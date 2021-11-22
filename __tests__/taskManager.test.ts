@@ -15,24 +15,35 @@ const tasks = [
     }
 ];
 
-const testRepository = new Repository(tasks);
+jest.mock('../src/repository');
 
-const manager = new TaskManager(testRepository);
+const TaskRepositoryMock = Repository as jest.MockedClass<typeof Repository>;
+
+beforeEach(() => {
+    TaskRepositoryMock.mockClear();
+});
+
+test('repository have been called', () => {
+    const testRepository = new Repository(tasks);
+    new TaskManager(testRepository);
+
+    expect(TaskRepositoryMock).toHaveBeenCalledTimes(1);
+});
 
 test('get all tasks', () => {
-    const allTasks = manager.getAllTasks();
+    const testRepository = new Repository(tasks);
+    const manager = new TaskManager(testRepository);
+    manager.getAllTasks();
 
-    expect(allTasks).toEqual(tasks);
+    expect(TaskRepositoryMock.prototype.getAll).toHaveBeenCalledTimes(1);
 });
 
 test('get active tasks', () => {
-    const activeTasks = manager.getActiveTasks();
+    const testRepository = new Repository(tasks);
+    const manager = new TaskManager(testRepository);
+    manager.getActiveTasks();
 
-    expect(activeTasks).toEqual([{
-        id: 1,
-        name: 'task1',
-        state: TaskState.active,
-    }]);
+    expect(TaskRepositoryMock.prototype.getActive).toHaveBeenCalledTimes(1);
 });
 
 test('add task', () => {
@@ -42,16 +53,20 @@ test('add task', () => {
         state: TaskState.active,
     };
 
+    const testRepository = new Repository(tasks);
+    const manager = new TaskManager(testRepository);
     manager.addTask(newTask);
 
-    expect(manager.getAllTasks()).toContainEqual(newTask);
+    expect(TaskRepositoryMock.prototype.addItem).toHaveBeenCalledTimes(1);
 });
 
 test('delete task', () => {
+    const testRepository = new Repository(tasks);
+    const manager = new TaskManager(testRepository);
     const deletedId = 2;
     manager.deleteTask(deletedId);
 
-    expect(manager.getAllTasks().map(task => task.id)).not.toContain(deletedId);
+    expect(TaskRepositoryMock.prototype.deleteItem).toHaveBeenCalledTimes(1);
 });
 
 test('update task', () => {
@@ -59,7 +74,10 @@ test('update task', () => {
     const newData = {
         name: 'newName',
     };
+
+    const testRepository = new Repository(tasks);
+    const manager = new TaskManager(testRepository);
     manager.updateTask(updatedId, newData);
 
-    expect(manager.getAllTasks().find(task => task.id === updatedId)).toMatchObject(newData);
+    expect(TaskRepositoryMock.prototype.updateItem).toHaveBeenCalledTimes(1);
 });
