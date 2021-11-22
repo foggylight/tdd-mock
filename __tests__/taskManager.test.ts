@@ -1,50 +1,28 @@
-import { Task, TaskRepository, TaskState } from '../src/models';
+import { Task, TaskState } from '../src/models';
 import TaskManager from '../src/taskManager';
+import Repository from '../src/repository'
 
-const repository: TaskRepository = {
-    items: [ 
-        {
-            id: 1,
-            name: 'task1',
-            state: TaskState.active,
-        }, 
-        {
-            id: 2,
-            name: 'task2',
-            state: TaskState.done,
-        }
-    ],
+const tasks = [ 
+    {
+        id: 1,
+        name: 'task1',
+        state: TaskState.active,
+    }, 
+    {
+        id: 2,
+        name: 'task2',
+        state: TaskState.done,
+    }
+];
 
-    getAll() {
-        return this.items;
-    },
+const testRepository = new Repository(tasks);
 
-    getActive() {
-        return this.items.filter((item: Task) => item.state === TaskState.active);
-    },
-
-    addItem(newItem: Task) {
-        this.items.push(newItem);
-    },
-    
-    deleteItem(itemId: number) {
-        const itemIndex = this.items.findIndex((item: Task) => item.id === itemId);
-        this.items.splice(itemIndex, 1);
-    },
-
-    updateItem(itemId: number, newData: Task) {
-        const updatedTask = { ...this.items.find((item: Task) => item.id === itemId), ...newData };
-        const itemIndex = this.items.findIndex((item: Task) => item.id === itemId);
-        this.items.splice(itemIndex, 1, updatedTask);
-    },
-};
-
-const manager = new TaskManager(repository);
+const manager = new TaskManager(testRepository);
 
 test('get all tasks', () => {
-    const tasks = manager.getAllTasks();
+    const allTasks = manager.getAllTasks();
 
-    expect(tasks).toEqual(repository.items);
+    expect(allTasks).toEqual(tasks);
 });
 
 test('get active tasks', () => {

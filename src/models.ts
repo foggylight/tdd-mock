@@ -10,7 +10,6 @@ export interface Task {
 }
 
 export interface TaskRepository {
-    items: Array<Task>;
     getAll: () => Array<Task>;
     getActive: () => Array<Task>;
     addItem: (newItem: Task) => void;

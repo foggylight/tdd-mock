@@ -1,7 +1,7 @@
 import { TaskRepository, Task, TaskState } from './models';
 
 class TaskManager {
-    constructor(private repository: TaskRepository ) {
+    constructor(private repository: TaskRepository) {
     }
 
     getAllTasks() {
