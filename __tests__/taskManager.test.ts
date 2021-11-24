@@ -1,6 +1,5 @@
 import { Task, TaskRepository, TaskState } from '../src/models';
 import TaskManager from '../src/taskManager';
-import Repository from '../src/repository'
 
 test('get all tasks', () => {
     const tasks = [ 
@@ -84,19 +83,6 @@ test('get active tasks', () => {
 });
 
 test('add task', () => {
-    const tasks: Array<Task> = [ 
-        {
-            id: 1,
-            name: 'task1',
-            state: TaskState.active,
-        }, 
-        {
-            id: 2,
-            name: 'task2',
-            state: TaskState.done,
-        }
-    ];
-
     const newTask: Task = {
         id: 3,
         name: 'task3',
@@ -114,19 +100,6 @@ test('add task', () => {
 });
 
 test('delete task', () => {
-    const tasks = [ 
-        {
-            id: 1,
-            name: 'task1',
-            state: TaskState.active,
-        },
-        {
-            id: 2,
-            name: 'task2',
-            state: TaskState.done,
-        }
-    ];
-
     const deletedId = 2;
 
     const testRepository: TaskRepository = {
@@ -140,19 +113,6 @@ test('delete task', () => {
 });
 
 test('update task', () => {
-    const tasks = [ 
-        {
-            id: 1,
-            name: 'task1',
-            state: TaskState.active,
-        },
-        {
-            id: 2,
-            name: 'task2',
-            state: TaskState.done,
-        }
-    ];
-
     const updatedId = 1;
     const newData = {
         name: 'newName',
