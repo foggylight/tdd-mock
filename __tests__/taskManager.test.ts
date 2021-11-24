@@ -27,12 +27,21 @@ test('get all tasks', () => {
     expect(allTasks).toEqual(tasks);
 });
 
-test.skip('get active tasks', () => {
-    const testRepository = new Repository(tasks);
-    const manager = new TaskManager(testRepository);
-    manager.getActiveTasks();
+test('get active tasks', () => {
+    const testRepository: TaskRepository = {
+        getAll: jest.fn(() => tasks)
+    }
 
-    // expect(TaskRepositoryMock.prototype.getActive).toHaveBeenCalledTimes(1);
+    const manager = new TaskManager(testRepository);
+    const activeTasks = manager.getActiveTasks();
+
+    expect(activeTasks).toEqual([
+        {
+            id: 1,
+            name: 'task1',
+            state: TaskState.active,
+        }, 
+    ]);
 });
 
 test.skip('add task', () => {
