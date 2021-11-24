@@ -105,7 +105,7 @@ test('add task', () => {
 
     const testRepository: TaskRepository = {
         getAll: () => tasks,
-        addItem: jest.fn((newTask) => tasks.push(newTask))
+        addItem: jest.fn((newTask) => { tasks.push(newTask) })
     };
 
     const manager = new TaskManager(testRepository);
@@ -131,17 +131,12 @@ test('add task', () => {
     ]);
 });
 
-test.skip('delete task', () => {
-    const tasks: Array<Task> = [ 
+test('delete task', () => {
+    const tasks = [ 
         {
             id: 1,
             name: 'task1',
             state: TaskState.active,
-        }, 
-        {
-            id: 2,
-            name: 'task2',
-            state: TaskState.done,
         }
     ];
 
@@ -149,26 +144,14 @@ test.skip('delete task', () => {
 
     const testRepository: TaskRepository = {
         getAll: () => tasks,
-        deleteItem: jest.fn((number: number) => [
-            {
-                id: 1,
-                name: 'task1',
-                state: TaskState.active,
-            }
-        ])
+        deleteItem: jest.fn((number: number) => {})
     };
 
     const manager = new TaskManager(testRepository);
     manager.deleteTask(deletedId);
 
     expect(testRepository.deleteItem).toHaveBeenCalledWith(deletedId);
-    expect(manager.getAllTasks()).toEqual([
-        {
-            id: 1,
-            name: 'task1',
-            state: TaskState.active,
-        }
-    ]);
+    expect(manager.getAllTasks()).toEqual(tasks);
 });
 
 test.skip('update task', () => {
