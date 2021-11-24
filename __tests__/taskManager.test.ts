@@ -154,15 +154,28 @@ test('delete task', () => {
     expect(manager.getAllTasks()).toEqual(tasks);
 });
 
-test.skip('update task', () => {
+test('update task', () => {
+    const tasks = [ 
+        {
+            id: 1,
+            name: 'newName',
+            state: TaskState.active,
+        }
+    ];
+
     const updatedId = 1;
     const newData = {
         name: 'newName',
     };
 
-    // const testRepository = new Repository(tasks);
-    // const manager = new TaskManager(testRepository);
-    // manager.updateTask(updatedId, newData);
+    const testRepository: TaskRepository = {
+        getAll: () => tasks,
+        updateItem: jest.fn((number: number, data: Task) => {})
+    };
 
-    // expect(TaskRepositoryMock.prototype.updateItem).toHaveBeenCalledTimes(1);
+    const manager = new TaskManager(testRepository);
+    manager.updateTask(updatedId, newData);
+
+    expect(testRepository.updateItem).toHaveBeenCalledWith(updatedId, newData);
+    expect(manager.getAllTasks()).toEqual(tasks);
 });
