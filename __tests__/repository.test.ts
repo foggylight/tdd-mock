@@ -22,16 +22,6 @@ test('get all tasks', () => {
     expect(allTasks).toEqual(tasks);
 });
 
-test('get active tasks', () => {
-    const activeTasks = testRepository.getActive();
-
-    expect(activeTasks).toEqual([{
-        id: 1,
-        name: 'task1',
-        state: TaskState.active,
-    }]);
-});
-
 test('add task', () => {
     const newTask: Task = {
         id: 3,

@@ -11,10 +11,6 @@ class Repository implements TaskRepository {
         return this.items;
     }
 
-    getActive() {
-        return this.items.filter((item: Task) => item.state === TaskState.active);
-    }
-
     addItem(newItem: Task) {
         this.items.push(newItem);
     }

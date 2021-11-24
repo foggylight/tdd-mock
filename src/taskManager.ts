@@ -9,7 +9,7 @@ class TaskManager {
     }
 
     getActiveTasks() {
-        return this.repository.getActive();
+        return this.repository.getAll().filter((task: Task) => task.state === TaskState.active);
     }
 
     addTask(newTask: Task) {

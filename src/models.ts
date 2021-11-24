@@ -10,9 +10,8 @@ export interface Task {
 }
 
 export interface TaskRepository {
-    getAll: () => Array<Task>;
-    getActive: () => Array<Task>;
-    addItem: (newItem: Task) => void;
-    deleteItem: (itemId: number) => void;
-    updateItem: (itemId: number, newData: Task) => void;
+    getAll?: () => Array<Task>;
+    addItem?: (newItem: Task) => void;
+    deleteItem?: (itemId: number) => void;
+    updateItem?: (itemId: number, newData: Task) => void;
 }
