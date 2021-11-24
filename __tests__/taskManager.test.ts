@@ -104,31 +104,13 @@ test('add task', () => {
     };
 
     const testRepository: TaskRepository = {
-        getAll: () => tasks,
-        addItem: jest.fn((newTask) => { tasks.push(newTask) })
+        addItem: jest.fn((newTask: Task) => {})
     };
 
     const manager = new TaskManager(testRepository);
     manager.addTask(newTask);
 
     expect(testRepository.addItem).toHaveBeenCalledWith(newTask);
-    expect(manager.getAllTasks()).toEqual([
-        {
-            id: 1,
-            name: 'task1',
-            state: TaskState.active,
-        }, 
-        {
-            id: 2,
-            name: 'task2',
-            state: TaskState.done,
-        },
-        {
-            id: 3,
-            name: 'task3',
-            state: TaskState.active,
-        }
-    ]);
 });
 
 test('delete task', () => {
@@ -137,13 +119,17 @@ test('delete task', () => {
             id: 1,
             name: 'task1',
             state: TaskState.active,
+        },
+        {
+            id: 2,
+            name: 'task2',
+            state: TaskState.done,
         }
     ];
 
     const deletedId = 2;
 
     const testRepository: TaskRepository = {
-        getAll: () => tasks,
         deleteItem: jest.fn((number: number) => {})
     };
 
@@ -151,15 +137,19 @@ test('delete task', () => {
     manager.deleteTask(deletedId);
 
     expect(testRepository.deleteItem).toHaveBeenCalledWith(deletedId);
-    expect(manager.getAllTasks()).toEqual(tasks);
 });
 
 test('update task', () => {
     const tasks = [ 
         {
             id: 1,
-            name: 'newName',
+            name: 'task1',
             state: TaskState.active,
+        },
+        {
+            id: 2,
+            name: 'task2',
+            state: TaskState.done,
         }
     ];
 
@@ -169,7 +159,6 @@ test('update task', () => {
     };
 
     const testRepository: TaskRepository = {
-        getAll: () => tasks,
         updateItem: jest.fn((number: number, data: Task) => {})
     };
 
@@ -177,5 +166,4 @@ test('update task', () => {
     manager.updateTask(updatedId, newData);
 
     expect(testRepository.updateItem).toHaveBeenCalledWith(updatedId, newData);
-    expect(manager.getAllTasks()).toEqual(tasks);
 });
