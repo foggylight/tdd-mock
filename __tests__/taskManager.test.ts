@@ -83,8 +83,8 @@ test('get active tasks', () => {
     expect(emptyActiveTasks).toEqual([]);
 });
 
-test.skip('add task', () => {
-    const tasks = [ 
+test('add task', () => {
+    const tasks: Array<Task> = [ 
         {
             id: 1,
             name: 'task1',
@@ -104,13 +104,31 @@ test.skip('add task', () => {
     };
 
     const testRepository: TaskRepository = {
-        addItem: jest.fn(() => tasks)
+        getAll: () => tasks,
+        addItem: jest.fn((newTask) => tasks.push(newTask))
     };
 
     const manager = new TaskManager(testRepository);
-    const activeTasks = manager.getActiveTasks();
+    manager.addTask(newTask);
 
-    // expect(TaskRepositoryMock.prototype.addItem).toHaveBeenCalledTimes(1);
+    expect(testRepository.addItem).toHaveBeenCalledWith(newTask);
+    expect(manager.getAllTasks()).toEqual([
+        {
+            id: 1,
+            name: 'task1',
+            state: TaskState.active,
+        }, 
+        {
+            id: 2,
+            name: 'task2',
+            state: TaskState.done,
+        },
+        {
+            id: 3,
+            name: 'task3',
+            state: TaskState.active,
+        }
+    ]);
 });
 
 test.skip('delete task', () => {
