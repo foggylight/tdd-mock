@@ -88,17 +88,16 @@ test('get active tasks (there is no active tasks in repository)', () => {
 });
 
 test('add task', () => {
-    const newTask: Task = {
-        id: 3,
-        name: 'task3',
-        state: TaskState.active,
-    };
-
     const repository: TaskRepository = {
         addItem: jest.fn((newTask: Task) => {})
     };
 
     const manager = new TaskManager(repository);
+    const newTask: Task = {
+        id: 3,
+        name: 'task3',
+        state: TaskState.active,
+    };
     manager.addTask(newTask);
 
     expect(repository.addItem).toHaveBeenCalledWith(newTask);
