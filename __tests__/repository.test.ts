@@ -14,10 +14,10 @@ const tasks = [
     }
 ];
 
-const testRepository = new Repository(tasks);
+const repository = new Repository(tasks);
 
 test('get all tasks', () => {
-    const allTasks = testRepository.getAll();
+    const allTasks = repository.getAll();
 
     expect(allTasks).toEqual(tasks);
 });
@@ -28,25 +28,24 @@ test('add task', () => {
         name: 'task3',
         state: TaskState.active,
     };
+    repository.addItem(newTask);
 
-    testRepository.addItem(newTask);
-
-    expect(testRepository.getAll()).toContainEqual(newTask);
+    expect(repository.getAll()).toContainEqual(newTask);
 });
 
 test('delete task', () => {
-    const deletedId = 2;
-    testRepository.deleteItem(deletedId);
+    const deletedTaskId = 2;
+    repository.deleteItem(deletedTaskId);
 
-    expect(testRepository.getAll().map(task => task.id)).not.toContain(deletedId);
+    expect(repository.getAll().map(task => task.id)).not.toContain(deletedTaskId);
 });
 
 test('update task', () => {
-    const updatedId = 1;
-    const newData = {
+    const updatedTaskId = 1;
+    const newTaskData = {
         name: 'newName',
     };
-    testRepository.updateItem(updatedId, newData);
+    repository.updateItem(updatedTaskId, newTaskData);
 
-    expect(testRepository.getAll().find(task => task.id === updatedId)).toMatchObject(newData);
+    expect(repository.getAll().find(task => task.id === updatedTaskId)).toMatchObject(newTaskData);
 });
