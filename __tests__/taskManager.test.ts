@@ -15,18 +15,18 @@ test('get all tasks', () => {
         }
     ];
 
-    const testRepository: TaskRepository = {
+    const repository: TaskRepository = {
         getAll: jest.fn(() => tasks)
     };
 
-    const manager = new TaskManager(testRepository);
+    const manager = new TaskManager(repository);
     const allTasks = manager.getAllTasks();
 
-    expect(testRepository.getAll).toHaveBeenCalledTimes(1);
+    expect(repository.getAll).toHaveBeenCalledTimes(1);
     expect(allTasks).toEqual(tasks);
 });
 
-test('get active tasks (there is active tasks)', () => {
+test('get active tasks (there is active tasks in repository)', () => {
     const tasks = [ 
         {
             id: 1,
@@ -45,14 +45,14 @@ test('get active tasks (there is active tasks)', () => {
         }
     ];
 
-    const testRepository: TaskRepository = {
+    const repository: TaskRepository = {
         getAll: jest.fn(() => tasks)
     };
 
-    const manager = new TaskManager(testRepository);
-    const activeTasks = manager.getActiveTasks();
+    const manager = new TaskManager(repository);
+    const activeTasksTest = manager.getActiveTasks();
 
-    expect(activeTasks).toEqual([
+    const activeTasks = [
         {
             id: 1,
             name: 'task1',
@@ -63,10 +63,12 @@ test('get active tasks (there is active tasks)', () => {
             name: 'task2',
             state: TaskState.active,
         } 
-    ]);
+    ];
+
+    expect(activeTasksTest).toEqual(activeTasks);
 });
 
-test('get active tasks (there is no active tasks)', () => {
+test('get active tasks (there is no active tasks in repository)', () => {
     const tasks = [
         {
             id: 1,
@@ -75,14 +77,14 @@ test('get active tasks (there is no active tasks)', () => {
         }
     ];
 
-    const testRepository: TaskRepository = {
+    const repository: TaskRepository = {
         getAll: jest.fn(() => tasks)
     };
 
-    const manager = new TaskManager(testRepository);
-    const emptyActiveTasks = manager.getActiveTasks();
+    const manager = new TaskManager(repository);
+    const activeTasksTest = manager.getActiveTasks();
 
-    expect(emptyActiveTasks).toEqual([]);
+    expect(activeTasksTest).toEqual([]);
 });
 
 test('add task', () => {
@@ -92,41 +94,39 @@ test('add task', () => {
         state: TaskState.active,
     };
 
-    const testRepository: TaskRepository = {
+    const repository: TaskRepository = {
         addItem: jest.fn((newTask: Task) => {})
     };
 
-    const manager = new TaskManager(testRepository);
+    const manager = new TaskManager(repository);
     manager.addTask(newTask);
 
-    expect(testRepository.addItem).toHaveBeenCalledWith(newTask);
+    expect(repository.addItem).toHaveBeenCalledWith(newTask);
 });
 
 test('delete task', () => {
-    const deletedId = 2;
-
-    const testRepository: TaskRepository = {
+    const repository: TaskRepository = {
         deleteItem: jest.fn((number: number) => {})
     };
 
-    const manager = new TaskManager(testRepository);
-    manager.deleteTask(deletedId);
+    const manager = new TaskManager(repository);
+    const deletedTaskId = 2;
+    manager.deleteTask(deletedTaskId);
 
-    expect(testRepository.deleteItem).toHaveBeenCalledWith(deletedId);
+    expect(repository.deleteItem).toHaveBeenCalledWith(deletedTaskId);
 });
 
 test('update task', () => {
-    const updatedId = 1;
-    const newData = {
-        name: 'newName',
-    };
-
-    const testRepository: TaskRepository = {
+    const repository: TaskRepository = {
         updateItem: jest.fn((number: number, data: Task) => {})
     };
 
-    const manager = new TaskManager(testRepository);
-    manager.updateTask(updatedId, newData);
+    const manager = new TaskManager(repository);
+    const updatedTaskId = 1;
+    const newTaskData = {
+        name: 'newName',
+    };
+    manager.updateTask(updatedTaskId, newTaskData);
 
-    expect(testRepository.updateItem).toHaveBeenCalledWith(updatedId, newData);
+    expect(repository.updateItem).toHaveBeenCalledWith(updatedTaskId, newTaskData);
 });
