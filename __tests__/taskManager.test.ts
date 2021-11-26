@@ -20,7 +20,8 @@ test('get all tasks', () => {
     ];
 
     const repository = makeRepository(tasks);
-    const allTasks = new TaskManager(repository).getAllTasks();
+    const manager = new TaskManager(repository);
+    const allTasks = manager.getAllTasks();
 
     expect(repository.getAll).toHaveBeenCalledTimes(1);
     expect(allTasks).toEqual(tasks);
@@ -46,7 +47,8 @@ test('get active tasks (there is active tasks in repository)', () => {
     ];
 
     const repository = makeRepository(tasks);
-    const activeTasksTest = new TaskManager(repository).getActiveTasks();
+    const manager = new TaskManager(repository);
+    const activeTasksTest = manager.getActiveTasks();
 
     const activeTasks = [
         {
@@ -74,7 +76,8 @@ test('get active tasks (there is no active tasks in repository)', () => {
     ];
 
     const repository = makeRepository(tasks);
-    const activeTasksTest = new TaskManager(repository).getActiveTasks();
+    const manager = new TaskManager(repository);
+    const activeTasksTest = manager.getActiveTasks();
 
     expect(activeTasksTest).toEqual([]);
 });
@@ -84,12 +87,13 @@ test('add task', () => {
         addItem: jest.fn((newTask: Task) => {})
     };
 
+    const manager = new TaskManager(repository);
     const newTask: Task = {
         id: 3,
         name: 'task3',
         state: TaskState.active,
     };
-    new TaskManager(repository).addTask(newTask);
+    manager.addTask(newTask);
 
     expect(repository.addItem).toHaveBeenCalledWith(newTask);
 });
@@ -99,8 +103,9 @@ test('delete task', () => {
         deleteItem: jest.fn((number: number) => {})
     };
 
+    const manager = new TaskManager(repository);
     const deletedTaskId = 2;
-    new TaskManager(repository).deleteTask(deletedTaskId);
+    manager.deleteTask(deletedTaskId);
 
     expect(repository.deleteItem).toHaveBeenCalledWith(deletedTaskId);
 });
@@ -110,11 +115,12 @@ test('update task', () => {
         updateItem: jest.fn((number: number, data: Task) => {})
     };
 
+    const manager = new TaskManager(repository);
     const updatedTaskId = 1;
     const newTaskData = {
         name: 'newName',
     };
-    new TaskManager(repository).updateTask(updatedTaskId, newTaskData);
+    manager.updateTask(updatedTaskId, newTaskData);
 
     expect(repository.updateItem).toHaveBeenCalledWith(updatedTaskId, newTaskData);
 });
