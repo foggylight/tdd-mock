@@ -1,28 +1,42 @@
 import { Task, TaskState } from '../src/models';
 import Repository from '../src/repository'
 
-const tasks = [ 
-    {
-        id: 1,
-        name: 'task1',
-        state: TaskState.active,
-    }, 
-    {
-        id: 2,
-        name: 'task2',
-        state: TaskState.done,
-    }
-];
+const makeRepository = () => {
+    const tasks = [ 
+        {
+            id: 1,
+            name: 'task1',
+            state: TaskState.active,
+        }, 
+        {
+            id: 2,
+            name: 'task2',
+            state: TaskState.done,
+        }
+    ];
 
-const repository = new Repository(tasks);
+    return new Repository(tasks);
+};
 
 test('get all tasks', () => {
-    const allTasks = repository.getAll();
+    const allTasks = makeRepository().getAll();
 
-    expect(allTasks).toEqual(tasks);
+    expect(allTasks).toEqual([ 
+        {
+            id: 1,
+            name: 'task1',
+            state: TaskState.active,
+        }, 
+        {
+            id: 2,
+            name: 'task2',
+            state: TaskState.done,
+        }
+    ]);
 });
 
 test('add task', () => {
+    const repository = makeRepository();
     const newTask: Task = {
         id: 3,
         name: 'task3',
@@ -34,6 +48,7 @@ test('add task', () => {
 });
 
 test('delete task', () => {
+    const repository = makeRepository();
     const deletedTaskId = 2;
     repository.deleteItem(deletedTaskId);
 
@@ -41,6 +56,7 @@ test('delete task', () => {
 });
 
 test('update task', () => {
+    const repository = makeRepository();
     const updatedTaskId = 1;
     const newTaskData = {
         name: 'newName',
